@@ -3,21 +3,20 @@
 #
 Summary:	A pythonic, object-oriented web development framework
 Summary(pl.UTF-8):	Pythonowy, zorientowany obiektowo szkielet do tworzenia WWW
-Name:		python-%{module}
-Version:	3.1.2
-Release:	4
+Name:		python3-%{module}
+Version:	18.10.0
+Release:	1
 License:	BSD
 Group:		Development/Languages/Python
-Source0:	http://download.cherrypy.org/%{fname}/%{version}/%{fname}-%{version}.tar.gz
-# Source0-md5:	15c60b3a91886b9a304d366fba93669c
-#Patch0:		%{name}-autoreload.patch
+Source0:	https://pypi.debian.net/%{fname}/%{module}-%{version}.tar.gz
+# Source0-md5:	3f7cf1b729467945218bf553f7232da8
 URL:		http://www.cherrypy.org
-BuildRequires:	rpmbuild(macros) >= 1.710
-BuildRequires:	python >= 1:2.5
-BuildRequires:	python-modules
+BuildRequires:	python3 >= 1:3.6
+BuildRequires:	python3-modules
 BuildRequires:	rpm-pythonprov
-%pyrequires_eq	python-modules
-Requires:	python-devel-tools
+BuildRequires:	rpmbuild(macros) >= 1.710
+Requires:	python3-devel-tools
+Requires:	python3-modules
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -62,17 +61,16 @@ Example files for CherryPy.
 Pliki przykładów dla CherryPy.
 
 %prep
-%setup -q -n %{fname}-%{version}
-#%patch0 -p1
+%setup -q -n %{module}-%{version}
 
 %build
-%py_build
+%py3_build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
-%py_install
+%py3_install
 
 rm -rf $RPM_BUILD_ROOT%{py_sitescriptdir}/%{module}/tutorial
 
@@ -85,9 +83,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README.txt
-%{py_sitescriptdir}/%{module}
-%{py_sitescriptdir}/CherryPy*
+%doc CHANGES.rst README.rst
+%{py3_sitescriptdir}/%{module}
+%{py3_sitescriptdir}/CherryPy*
 %attr(755,root,root) %{_bindir}/cherryd
 
 %files examples
